@@ -57,8 +57,10 @@ $app->post('/guardar_click', function(Request $request, Response $response){
         $latitud = $request->getParsedBody()["latitud"];
         $longitud = $request->getParsedBody()["longitud"];
         //Click($pantalla, $boton, $latitud, $longitud)
-        $temp = new Click($pantalla, $boton, $latitud, $longitud);
-        return $temp->dbGuardarClick(); 
+        if($pantalla && $boton)
+        {
+        return Click::dbGuardarClick($pantalla, $boton, $latitud, $longitud); 
+        }
     }catch(Exception $e)
     {
         echo 'Excepción capturada - Error almacenando Click: ',  $e->getMessage(), "\n";
@@ -66,8 +68,11 @@ $app->post('/guardar_click', function(Request $request, Response $response){
 });
 /*
 ## traer_clicks
-		data: {pantalla, entre_cual_fecha, hasta_que_fecha, lat, lng, changuiLatLng} 
-		devuelve: [{id,pantalla,fecha,lat,lng,boton},etc]
+		data: ($pantalla, $latitud, $longitud, $changui, $fechaDesde, $fechaHasta)
+        devuelve: [{id,pantalla,fecha,lat,lng,boton},etc]
+        
+        Formato de fecha esperado:
+        2017-12-25
 */
 $app->post('/traer_clicks', function(Request $request, Response $response){
     $pantalla = $request->getParsedBody()["pantalla"];
@@ -76,8 +81,8 @@ $app->post('/traer_clicks', function(Request $request, Response $response){
     $latitud = $request->getParsedBody()["latitud"];
     $longitud = $request->getParsedBody()["longitud"];
     $changui = $request->getParsedBody()["changui"];
-    // Espera la fecha con el siguiente formato 2017-12-20 02:14:39
-    //entonces le mandarias a la api: una ubicacion y un changui (select * from tabla where lat>ubiicacion-changui and lat<ubicacion+changui...)    
+    $estadisticas = Click::traerClicks($pantalla, $latitud, $longitud, $changui, $desde, $hasta);
+    $response->getBody()->write(json_encode($estadisticas));
 });
 
 $app->run();

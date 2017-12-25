@@ -1,14 +1,11 @@
 <?php 
-
 // Incluyo archivo para facilitar la comunicación con la base de datos empleando la metodología PDO. (Php data objects.)
-
 include_once 'accesoDatos.php';
 
 class Posicion
 {
     public $latitud;
     public $longitud;
-
     public function Posicion($latitud, $longitud)
     {
         $this->latitud = $latitud;
@@ -158,7 +155,6 @@ class Encuesta
     public $longitud;
     // Fecha
     public $fecha;
-
     // Tipo = Tipo de encuesta.  '5'.'7a'.'7b'
     // Arreglo = JSON String de el ARRAY de la encuesta [2,1,6]
     // Lat = Latitud : double
@@ -186,12 +182,9 @@ class Encuesta
     }
 
     // Métodos base de datos, empleados por los WebServices.
-
     /* 
     +guardar_datos(int encuesta, array respuestas, lat, lng):(mensaje, ultimoId);
-
     Array respuesta es una convención de como saber que pregunta es y que respuesta se eligió. --> [3,1,5]
-
     Pregunta 1 se eligió respuesta 3.
     Pregunta 2 se eligió respuesta 1.
     Pregunta 3 se eligió respuesta 5.
@@ -216,9 +209,5 @@ class Encuesta
             echo 'Excepción capturada - Error guardando datos de encuesta: ',  $e->getMessage(), "\n";
         }    
     }
-
-
-
 }
-
 ?>
