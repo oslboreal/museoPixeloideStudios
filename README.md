@@ -1,2 +1,2 @@
 # museoPixeloideStudios
-Adelante de código API REST - Trabajo para Pixeloide Studios.
+- API REST - Trabajo para PixeloideStudios
